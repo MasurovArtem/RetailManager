@@ -3,17 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using Caliburn.Micro;
+using RMDesktopUI.Helpers;
 using RMDesktopUI.ViewModels;
 
 namespace RMDesktopUI
 {
     public class Bootstrapper : BootstrapperBase
     {
-        private SimpleContainer _container = new SimpleContainer();
+        private readonly SimpleContainer _container = new SimpleContainer();
         public Bootstrapper()
         {
             Initialize();
+            ConventionManager.AddElementConvention<PasswordBox>(
+                PasswordBoxHelper.BoundPasswordProperty,
+                "Password",
+                "PasswordChanged");
         }
 
         protected override void Configure()
@@ -21,7 +27,9 @@ namespace RMDesktopUI
             _container.Instance(_container);
             _container
                 .Singleton<IWindowManager, WindowManager>()
-                .Singleton<IEventAggregator, EventAggregator>();
+                .Singleton<IEventAggregator, EventAggregator>()
+                .Singleton<IAPIHelper, APIHelper>();
+
 
             GetType().Assembly.GetTypes()
                 .Where(type => type.IsClass)
