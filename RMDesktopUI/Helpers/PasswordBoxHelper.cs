@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace RMDesktopUI.Helpers
 {
-    public class PasswordBoxHelper
+    public static class PasswordBoxHelper
     {
         public static readonly DependencyProperty BoundPasswordProperty =
             DependencyProperty.RegisterAttached("BoundPassword",
@@ -14,7 +14,8 @@ namespace RMDesktopUI.Helpers
 
         public static string GetBoundPassword(DependencyObject d)
         {
-            if (d is PasswordBox box)
+            var box = d as PasswordBox;
+            if (box != null)
             {
                 // this funny little dance here ensures that we've hooked the
                 // PasswordChanged event once, and only once.
@@ -59,5 +60,6 @@ namespace RMDesktopUI.Helpers
             // set cursor past the last character in the password box
             password.GetType().GetMethod("Select", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(password, new object[] { password.Password.Length, 0 });
         }
+
     }
 }
