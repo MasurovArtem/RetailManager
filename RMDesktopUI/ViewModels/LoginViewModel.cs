@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
-using RMDesktopUI.Helpers;
+using RMDesktopUI.Library.Api;
 
 namespace RMDesktopUI.ViewModels
 {
@@ -12,9 +12,9 @@ namespace RMDesktopUI.ViewModels
         private string _password;
         private bool _isErrorVisible;
         private string _errorMessage;
-        private readonly IAPIHelper _apiHelper;
+        private readonly IApiHelper _apiHelper;
 
-        public LoginViewModel(IAPIHelper apiHelper)
+        public LoginViewModel(IApiHelper apiHelper)
         {
             _apiHelper = apiHelper;
         }
@@ -77,6 +77,9 @@ namespace RMDesktopUI.ViewModels
             {
                 ErrorMessage = string.Empty;
                 var result = await _apiHelper.Authenticate(UserName, Password);
+
+                // Capture more information about the user
+                await _apiHelper.GetLoginUserInfo(result.Access_Token);
             }
             catch (Exception ex)
             {
