@@ -10,7 +10,6 @@ namespace RMDesktopUI.ViewModels
     {
         private string _userName;
         private string _password;
-        private bool _isErrorVisible;
         private string _errorMessage;
         private readonly IApiHelper _apiHelper;
 
@@ -18,7 +17,8 @@ namespace RMDesktopUI.ViewModels
         {
             _apiHelper = apiHelper;
         }
-        public string UserName
+
+        private string UserName
         {
             get => _userName;
             set
@@ -28,7 +28,8 @@ namespace RMDesktopUI.ViewModels
                 NotifyOfPropertyChange(() => CanLogIn);
             }
         }
-        public string Password
+
+        private string Password
         {
             get => _password;
             set
@@ -38,7 +39,8 @@ namespace RMDesktopUI.ViewModels
                 NotifyOfPropertyChange(() => CanLogIn);
             }
         }
-        public string ErrorMessage
+
+        private string ErrorMessage
         {
             get => _errorMessage;
             set
@@ -48,7 +50,8 @@ namespace RMDesktopUI.ViewModels
                 NotifyOfPropertyChange(() => IsErrorVisible);
             }
         }
-        public bool IsErrorVisible
+
+        private bool IsErrorVisible
         {
             get
             {
@@ -58,15 +61,11 @@ namespace RMDesktopUI.ViewModels
         }
 
 
-        public bool CanLogIn
+        private bool CanLogIn
         {
             get
             {
-                bool output = false;
-                if (UserName?.Length > 0 && Password?.Length > 0)
-                {
-                    output = true;
-                }
+                bool output = UserName?.Length > 0 && Password?.Length > 0;
                 return output;
             }
         }
