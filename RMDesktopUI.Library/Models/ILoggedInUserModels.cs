@@ -2,7 +2,7 @@
 
 namespace RMDesktopUI.Library.Models
 {
-    public interface ILoggedInUserModels
+    public interface ILoggedInUserModel
     {
         DateTime CreateDate { get; set; }
         string EmailAddress { get; set; }

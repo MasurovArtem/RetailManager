@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
+using RMDesktopUI.EventModels;
 using RMDesktopUI.Library.Api;
 
 namespace RMDesktopUI.ViewModels
@@ -12,13 +13,15 @@ namespace RMDesktopUI.ViewModels
         private string _password;
         private string _errorMessage;
         private readonly IApiHelper _apiHelper;
+        private readonly IEventAggregator _events;
 
-        public LoginViewModel(IApiHelper apiHelper)
+        public LoginViewModel(IApiHelper apiHelper, IEventAggregator events)
         {
             _apiHelper = apiHelper;
+            _events = events;
         }
 
-        private string UserName
+        public string UserName
         {
             get => _userName;
             set
@@ -29,7 +32,7 @@ namespace RMDesktopUI.ViewModels
             }
         }
 
-        private string Password
+        public string Password
         {
             get => _password;
             set
@@ -40,7 +43,7 @@ namespace RMDesktopUI.ViewModels
             }
         }
 
-        private string ErrorMessage
+        public string ErrorMessage
         {
             get => _errorMessage;
             set
@@ -51,7 +54,7 @@ namespace RMDesktopUI.ViewModels
             }
         }
 
-        private bool IsErrorVisible
+        public bool IsErrorVisible
         {
             get
             {
@@ -61,7 +64,7 @@ namespace RMDesktopUI.ViewModels
         }
 
 
-        private bool CanLogIn
+        public bool CanLogIn
         {
             get
             {
@@ -74,11 +77,13 @@ namespace RMDesktopUI.ViewModels
         {
             try
             {
-                ErrorMessage = string.Empty;
+                ErrorMessage = "";
                 var result = await _apiHelper.Authenticate(UserName, Password);
 
-                // Capture more information about the user
-                await _apiHelper.GetLoginUserInfo(result.Access_Token);
+                // Capture more information about user
+                await _apiHelper.GetLoggedInUserInfo(result.Access_Token);
+
+                _events.PublishOnUIThread(new LogOnEvent());
             }
             catch (Exception ex)
             {

@@ -2,7 +2,7 @@
 
 namespace RMDesktopUI.Library.Models
 {
-    public class LoggedInUserModels : ILoggedInUserModels
+    public class LoggedInUserModel : ILoggedInUserModel
     {
         public string Token { get; set; }
         public string Id { get; set; }
