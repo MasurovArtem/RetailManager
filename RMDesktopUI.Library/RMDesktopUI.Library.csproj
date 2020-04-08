@@ -51,7 +51,9 @@
     <Compile Include="Api\APIHelper.cs" />
     <Compile Include="Api\IAPIHelper.cs" />
     <Compile Include="Api\IProductEndPoint.cs" />
+    <Compile Include="Api\ISaleEndPoint.cs" />
     <Compile Include="Api\ProductEndPoint.cs" />
+    <Compile Include="Api\SaleEndPoint.cs" />
     <Compile Include="Helpers\ConfigHelper.cs" />
     <Compile Include="Helpers\IConfigHelper.cs" />
     <Compile Include="Models\AuthenticateUser.cs" />
@@ -59,10 +61,18 @@
     <Compile Include="Models\ILoggedInUserModels.cs" />
     <Compile Include="Models\LoggedInUserModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\SaleDetailModel.cs" />
+    <Compile Include="Models\SaleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RMDataManager\RMDataManager.csproj">
+      <Project>{0579FECB-5671-4DC9-B8E5-38110B0B11F2}</Project>
+      <Name>RMDataManager</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
