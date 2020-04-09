@@ -13,6 +13,14 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="dbo" t="Include">
           <e p="Stored Procedures" t="Include">
+            <e p="spInventory_GetAll.sql" t="Include" />
+            <e p="spInventory_Insert.sql" t="Include" />
+            <e p="spProduct_GetAll.sql" t="Include" />
+            <e p="spProduct_GetById.sql" t="Include" />
+            <e p="spSale_Insert.sql" t="Include" />
+            <e p="spSale_Lookup.sql" t="Include" />
+            <e p="spSale_SaleReport.sql" t="Include" />
+            <e p="spSaleDetail_Insert.sql" t="Include" />
             <e p="spUserLookup.sql" t="Include" />
           </e>
           <e p="Tables" t="Include">
@@ -131,6 +139,9 @@
         <e p="Controllers" t="Include">
           <e p="AccountController.cs" t="Include" />
           <e p="HomeController.cs" t="Include" />
+          <e p="InventoryController.cs" t="Include" />
+          <e p="ProductController.cs" t="Include" />
+          <e p="SaleController.cs" t="Include" />
           <e p="UserController.cs" t="Include" />
           <e p="ValuesController.cs" t="Include" />
         </e>
@@ -197,7 +208,11 @@
       </e>
       <e p="RMDataManager.Library" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
+        <e p="ConfigHelper.cs" t="Include" />
         <e p="DataAccess" t="Include">
+          <e p="InventoryData.cs" t="Include" />
+          <e p="ProductData.cs" t="Include" />
+          <e p="SaleData.cs" t="Include" />
           <e p="UserData.cs" t="Include" />
         </e>
         <e p="Internal" t="Include">
@@ -206,6 +221,13 @@
           </e>
         </e>
         <e p="Models" t="Include">
+          <e p="InventoryModel.cs" t="Include" />
+          <e p="ProductModel.cs" t="Include" />
+          <e p="SaleDbModel.cs" t="Include" />
+          <e p="SaleDetailDBModel.cs" t="Include" />
+          <e p="SaleDetailModel.cs" t="Include" />
+          <e p="SaleModel.cs" t="Include" />
+          <e p="SaleReportModel.cs" t="Include" />
           <e p="UserModel.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive" />
@@ -221,22 +243,30 @@
         <e p="App.xaml.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Bootstrapper.cs" t="Include" />
+        <e p="EventModels" t="Include">
+          <e p="LogOnEvent.cs" t="Include" />
+        </e>
         <e p="Helpers" t="Include">
           <e p="PasswordBoxHelper.cs" t="Include" />
         </e>
-        <e p="Model" t="Include" />
+        <e p="Model" t="Include">
+          <e p="CartItemDisplayModel.cs" t="Include" />
+          <e p="ProductDisplayModel.cs" t="Include" />
+        </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="App.g.cs" t="Include" />
             <e p="GeneratedInternalTypeHelper.g.cs" t="Include" />
             <e p="Views" t="Include">
               <e p="LoginView.g.cs" t="Include" />
+              <e p="SalesView.g.cs" t="Include" />
               <e p="ShellView.g.cs" t="Include" />
             </e>
           </e>
         </e>
         <e p="packages.config" t="Include" />
         <e p="Properties" t="Include">
+          <e p="Annotations.cs" t="Include" />
           <e p="AssemblyInfo.cs" t="Include" />
           <e p="Resources.Designer.cs" t="Include" />
           <e p="Resources.resx" t="Include" />
@@ -246,11 +276,14 @@
         <e p="RMDesktopUI.csproj" t="IncludeRecursive" />
         <e p="ViewModels" t="Include">
           <e p="LoginViewModel.cs" t="Include" />
+          <e p="SalesViewModel.cs" t="Include" />
           <e p="ShellViewModel.cs" t="Include" />
         </e>
         <e p="Views" t="Include">
           <e p="LoginView.xaml" t="Include" />
           <e p="LoginView.xaml.cs" t="Include" />
+          <e p="SalesView.xaml" t="Include" />
+          <e p="SalesView.xaml.cs" t="Include" />
           <e p="ShellView.xaml" t="Include" />
           <e p="ShellView.xaml.cs" t="Include" />
         </e>
@@ -259,12 +292,24 @@
         <e p="Api" t="Include">
           <e p="APIHelper.cs" t="Include" />
           <e p="IAPIHelper.cs" t="Include" />
+          <e p="IProductEndPoint.cs" t="Include" />
+          <e p="ISaleEndPoint.cs" t="Include" />
+          <e p="ProductEndPoint.cs" t="Include" />
+          <e p="SaleEndPoint.cs" t="Include" />
         </e>
         <e p="bin" t="ExcludeRecursive" />
+        <e p="Helpers" t="Include">
+          <e p="ConfigHelper.cs" t="Include" />
+          <e p="IConfigHelper.cs" t="Include" />
+        </e>
         <e p="Models" t="Include">
           <e p="AuthenticateUser.cs" t="Include" />
+          <e p="CartItemModel.cs" t="Include" />
           <e p="ILoggedInUserModels.cs" t="Include" />
-          <e p="LoggedInUserModels.cs" t="Include" />
+          <e p="LoggedInUserModel.cs" t="Include" />
+          <e p="ProductModel.cs" t="Include" />
+          <e p="SaleDetailModel.cs" t="Include" />
+          <e p="SaleModel.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive" />
         <e p="packages.config" t="Include" />
