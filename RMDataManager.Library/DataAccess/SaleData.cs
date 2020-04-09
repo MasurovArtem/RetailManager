@@ -23,7 +23,7 @@ namespace RMDataManager.Library.DataAccess
                     ProductId = item.ProductId,
                     Quantity = item.Quantity
                 };
-                
+
                 //Get information about this product
                 var productInfo = product.GetProductById(detail.ProductId);
                 if (productInfo == null)
@@ -50,35 +50,41 @@ namespace RMDataManager.Library.DataAccess
 
             sale.Total = sale.SubTotal + sale.Tax;
 
-            // Save the sale model
-
-            SqlDataAccess sql = new SqlDataAccess();
-            sql.SaveData<SaleDbModel>("dbo.spSale_Insert", sale, "RMData");
-
-            // Get the ID from the sale mode
-
-            sale.Id = sql.LoadData<int, dynamic>(
-            "dbo.spSale_Lookup",
-            new
+            using (SqlDataAccess sql = new SqlDataAccess())
             {
-                sale.CashierId,
-                sale.SaleDate
-            },
-            "RMData").FirstOrDefault();
+                try
+                {
+                    sql.StartTransaction("RMData");
 
-            // Finish filling int the sale detail models
+                    // Save the sale model
+                    sql.SaveDataInTransaction("dbo.spSale_Insert", sale);
 
-            foreach (var item in details)
-            {
-                item.SaleId = sale.Id;
-                
-                // Save the sale detail model
-                sql.SaveData("dbo.spSaleDetail_Insert", item, "RMData");
+                    // Get the ID from the sale mode
+                    sale.Id = sql.LoadDataInTransaction<int, dynamic>(
+                        "dbo.spSale_Lookup",
+                        new
+                        {
+                            sale.CashierId,
+                            sale.SaleDate
+                        }).FirstOrDefault();
+
+                    // Finish filling int the sale detail models
+                    foreach (var item in details)
+                    {
+                        item.SaleId = sale.Id;
+
+                        // Save the sale detail model
+                        sql.SaveDataInTransaction("dbo.spSaleDetail_Insert", item);
+                    }
+
+                    sql.CommitTransaction();
+                }
+                catch(Exception ex)
+                {
+                   sql.RollBackTransaction();
+                   throw;
+                }
             }
-
-           
-
-            
         }
     }
 }
