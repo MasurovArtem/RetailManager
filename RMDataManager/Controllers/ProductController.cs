@@ -9,7 +9,7 @@ using RMDataManager.Library.Models;
 
 namespace RMDataManager.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Cashier")]
     public class ProductController : ApiController
     {
         // GET api/values
