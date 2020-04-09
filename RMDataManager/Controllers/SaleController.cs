@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Routing;
 using Microsoft.AspNet.Identity;
 using RMDataManager.Library.DataAccess;
 using RMDataManager.Library.Models;
 
 namespace RMDataManager.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class SaleController : ApiController
     {
 
@@ -16,5 +18,14 @@ namespace RMDataManager.Controllers
             string userId = RequestContext.Principal.Identity.GetUserId();
             data.SaveSale(sale, userId);
         }
+
+        [Route("GetSaleReport")]
+        public List<SaleReportModel> GetSalesReport()
+        {
+            SaleData data = new SaleData();
+
+            return data.GetSaleReport();
+        }
+
     }
 }
