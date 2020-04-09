@@ -16,12 +16,14 @@ namespace RMDesktopUI.ViewModels
         private readonly IProductEndPoint _productEndPoint;
         private readonly IConfigHelper _configHelper;
         private readonly ISaleEndPoint _saleEndPoint;
-        private  IMapper _mapper;
+        private readonly IMapper _mapper;
 
         private int _itemQuantity = 1;
         private BindingList<ProductDisplayModel> _products;
         private BindingList<CartItemDisplayModel> _cart = new BindingList<CartItemDisplayModel>();
-        private ProductDisplayModel _selectedProductDisplayModel;
+        private ProductDisplayModel _selectedProduct;
+        private CartItemDisplayModel _selectedCartItem;
+
 
         public SalesViewModel(IProductEndPoint productEndPoint, IConfigHelper configHelper, 
             ISaleEndPoint saleEndPoint, IMapper mapper)
@@ -117,7 +119,7 @@ namespace RMDesktopUI.ViewModels
         {
             get
             {
-                bool output = ItemQuantity > 0 && SelectedProductDisplayModel?.QuantityInStock >= ItemQuantity;
+                bool output = ItemQuantity > 0 && SelectedProduct?.QuantityInStock >= ItemQuantity;
                 // Make sure something is selected
                 // make sure there is an item quantity
 
@@ -126,21 +128,33 @@ namespace RMDesktopUI.ViewModels
         }
 
 
-        public ProductDisplayModel SelectedProductDisplayModel
+        public ProductDisplayModel SelectedProduct
         {
-            get => _selectedProductDisplayModel;
+            get => _selectedProduct;
             set
             {
-                _selectedProductDisplayModel = value;
-                 NotifyOfPropertyChange(() => SelectedProductDisplayModel);
+                 _selectedProduct = value;
+                 NotifyOfPropertyChange(() => SelectedProduct);
                  NotifyOfPropertyChange(() => CanAddToCart);
+            }
+        }
+
+
+        public CartItemDisplayModel SelectedCartItem
+        {
+            get => _selectedCartItem;
+            set
+            {
+                _selectedCartItem = value;
+                NotifyOfPropertyChange(() => SelectedCartItem);
+                NotifyOfPropertyChange(() => CanRemoveFromCart);
             }
         }
 
 
         public void AddToCart()
         {
-            CartItemDisplayModel existingItemDisplay = Cart.FirstOrDefault(x => x.Product.Equals(SelectedProductDisplayModel));
+            CartItemDisplayModel existingItemDisplay = Cart.FirstOrDefault(x => x.Product.Equals(SelectedProduct));
 
             if (existingItemDisplay != null)
             {
@@ -157,12 +171,12 @@ namespace RMDesktopUI.ViewModels
             {
                 var item = new CartItemDisplayModel
                 {
-                    Product = SelectedProductDisplayModel,
+                    Product = SelectedProduct,
                     QuantityInCart = ItemQuantity
                 };
                 Cart.Add(item);
             }
-            SelectedProductDisplayModel.QuantityInStock -= ItemQuantity;
+            SelectedProduct.QuantityInStock -= ItemQuantity;
             ItemQuantity = 1;
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Tax);
@@ -175,9 +189,7 @@ namespace RMDesktopUI.ViewModels
         {
             get
             {
-                bool output = false;
-                // Make sure something is selected
-                // make sure there is an item quantity
+                bool output = SelectedCartItem != null && SelectedCartItem?.Product.QuantityInStock > 0;
 
                 return output;
             }
@@ -185,6 +197,15 @@ namespace RMDesktopUI.ViewModels
 
         public void RemoveFromCart()
         {
+            SelectedCartItem.Product.QuantityInStock += 1;
+            if (SelectedCartItem.QuantityInCart > 1)
+            {
+                SelectedCartItem.QuantityInCart -= 1;
+            }
+            else
+            {
+                Cart.Remove(SelectedCartItem); 
+            }
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Tax);
             NotifyOfPropertyChange(() => Total);

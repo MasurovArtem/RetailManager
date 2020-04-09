@@ -38,7 +38,7 @@
         <!-- Column 0 -->
         <TextBlock Text="Items" Grid.Row="1" Grid.Column="0"/>
         <ListBox x:Name="Products" 
-                 SelectedItem="{Binding SelectedProductDisplayModel}"
+                 SelectedItem="{Binding SelectedProduct}"
                  Grid.Row="2" 
                  Grid.Column="0" 
                  MinWidth="250"
@@ -75,6 +75,7 @@
         <!-- Column 2 -->
         <TextBlock Text="Cart" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Margin="0.333,0,57.133,0" Grid.RowSpan="4"></TextBlock>
         <ListBox x:Name="Cart" 
+                 SelectedItem="{Binding SelectedCartItem}"
                  Grid.Row="2" 
                  Grid.Column="2" 
                  MinWidth="250"
