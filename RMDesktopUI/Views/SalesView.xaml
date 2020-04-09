@@ -38,7 +38,7 @@
         <!-- Column 0 -->
         <TextBlock Text="Items" Grid.Row="1" Grid.Column="0"/>
         <ListBox x:Name="Products" 
-                 SelectedItem="{Binding SelectedProduct}"
+                 SelectedItem="{Binding SelectedProductDisplayModel}"
                  Grid.Row="2" 
                  Grid.Column="0" 
                  MinWidth="250"
