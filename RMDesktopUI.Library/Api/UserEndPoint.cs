@@ -6,22 +6,22 @@ using RMDesktopUI.Library.Models;
 
 namespace RMDesktopUI.Library.Api
 {
-    public class ProductEndPoint : IProductEndPoint
+    public class UserEndPoint : IUserEndPoint
     {
         private readonly IApiHelper _apiHelper;
 
-        public ProductEndPoint(IApiHelper apiHelper)
+        public UserEndPoint(IApiHelper apiHelper)
         {
             _apiHelper = apiHelper;
         }
 
-        public async Task<List<ProductModel>> GetAll() 
+        public async Task<List<UserModel>> GetAll()
         {
-            using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync("/api/product"))
+            using (HttpResponseMessage response = await _apiHelper.ApiClient.GetAsync("/api/User/Admin/GetAllUsers"))
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = await response.Content.ReadAsAsync<List<ProductModel>>();
+                    var result = await response.Content.ReadAsAsync<List<UserModel>>();
                     return result;
                 }
                 else

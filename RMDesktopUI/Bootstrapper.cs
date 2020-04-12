@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Xml;
 using AutoMapper;
 using Caliburn.Micro;
 using RMDesktopUI.Helpers;
@@ -46,7 +45,9 @@ namespace RMDesktopUI
 
             _container.Instance(_container)
                 .PerRequest<IProductEndPoint, ProductEndPoint>()
+                .PerRequest<IUserEndPoint, UserEndPoint>()
                 .PerRequest<ISaleEndPoint, SaleEndPoint>();
+                
 
 
             _container
