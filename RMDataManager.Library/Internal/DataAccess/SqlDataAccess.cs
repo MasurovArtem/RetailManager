@@ -95,7 +95,7 @@ namespace RMDataManager.Library.Internal.DataAccess
                 {
                     CommitTransaction();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // TODO:: Log this issue
                 }
